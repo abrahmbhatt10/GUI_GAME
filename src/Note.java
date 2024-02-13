@@ -24,6 +24,41 @@ public class Note {
         this.isVoid = true;
     }
 
+    public void run() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Welcome to Tic Tac Toe!");
+
+        // Loop until there is a winner or no more turns
+        while(!this.checkWin() && this.checkTurn()) {
+            this.printBoard();
+            System.out.println("Enter your Row Pick:" );
+            int row = input.nextInt();
+            System.out.println("Enter your Col Pick:" );
+            int col = input.nextInt();
+            if(this.pickLocation(row, col)) {
+                this.takeTurn(row, col);
+            } else {
+                System.out.println("That space is taken, or you entered an invalid row/col");
+            }
+        }
+
+        private boolean pickLocation(int row, int col) {
+            if(row < 3 && col < 3) {
+                return this.board[row][col].isEmpty();
+            }
+            return false;
+        }
+
+        private void takeTurn(int row, int col) {
+            if(this.turn % 2 == 0) {
+                this.board[row][col].setMarker(X_MARKER);
+            }
+            else {
+                this.board[row][col].setMarker(O_MARKER);
+            }
+            this.turn++;
+        }
 
     public void run() {
         Scanner input = new Scanner(System.in);
@@ -41,6 +76,7 @@ public class Note {
             {
                 Note nNote = new Note(i,j);
                 sheetMusic1[i][j] = nNote;
+                System.out.println("X");
             }
             else {
                 Note nNote = new Note();
@@ -102,8 +138,17 @@ public class Note {
 
         //sets each phrase for 1,3,5,7 chord tones from sheetmusic 1,2,3,4 respectively
         //If two notes are played at the same time(col), then one phrase must shift the whole phrase by 4/16th notes (4 cols more)
+        int[] chordTones;
+        for(int i = 0; i < 16; i++)
+        {
+            for(int j = 0; j < 7; j++)
+            {
+                if(sheetMusic1[i][j])
+            }
+        }
 
         newMusic[0] = sheetMusic1[0];
+        for(int i = 0; i < )
         newMusic[2] = sheetMusic2[2];
         newMusic[4] = sheetMusic3[4];
         newMusic[6] = sheetMusic4[6];
@@ -143,6 +188,8 @@ public class Note {
         }
     }
 }
+
+
 
     private void printBoard() {
         for(int i = 0; i < 16; i++)
