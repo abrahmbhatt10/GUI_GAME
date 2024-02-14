@@ -29,20 +29,6 @@ public class Note {
 
         System.out.println("Welcome to Tic Tac Toe!");
 
-        // Loop until there is a winner or no more turns
-        while(!this.checkWin() && this.checkTurn()) {
-            this.printBoard();
-            System.out.println("Enter your Row Pick:" );
-            int row = input.nextInt();
-            System.out.println("Enter your Col Pick:" );
-            int col = input.nextInt();
-            if(this.pickLocation(row, col)) {
-                this.takeTurn(row, col);
-            } else {
-                System.out.println("That space is taken, or you entered an invalid row/col");
-            }
-        }
-
         private boolean pickLocation(int row, int col) {
             if(row < 3 && col < 3) {
                 return this.board[row][col].isEmpty();
