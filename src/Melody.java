@@ -1,9 +1,11 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 
 
 public class Melody {
-    private static boolean[][] currentMelody = new boolean[7][16];
+    private boolean[][] currentMelody = new boolean[7][16];
+    private GUIGameViewer frontEnd;
 
     public Melody()
     {
@@ -17,6 +19,22 @@ public class Melody {
 
 
 
+    }
+
+    public boolean[][] getCurrentMelody() {
+        return currentMelody;
+    }
+
+    public void setCurrentMelody(boolean[][] currentMelody) {
+        this.currentMelody = currentMelody;
+    }
+
+    public GUIGameViewer getFrontEnd() {
+        return frontEnd;
+    }
+
+    public void setFrontEnd(GUIGameViewer frontEnd) {
+        this.frontEnd = frontEnd;
     }
 
     public void setPhrase(int chordTone, boolean[] phrase)
@@ -39,6 +57,34 @@ public class Melody {
     {
         currentMelody[chordTone][notePosition] = noteValue;
     }
+
+    public void display(Graphics g)
+    {
+        //fills in the rectangle with 4 lines
+        int xOffset = backEnd.getxOffset();
+        int yOffset = backEnd.getyOffset();
+        int length = backEnd.getsLength();
+
+        g.drawRect(xOffset+col*length, yOffset+ row*length, length, length);
+
+        //fills rectangle in green if won
+        if(getIsWinningSquare())
+        {   g.setColor(Color.GREEN);
+            g.fillRect(xOffset+col*length, yOffset+row*length, length, length);
+        }
+
+        if(marker.equals(backEnd.X_MARKER))
+        {
+            g.drawRect( xOffset+col*length,yOffset+row*length, length, length);
+            g.drawImage(backEnd.getxMarkerImage(), xOffset + col * length, yOffset + row * length,null);
+        }
+        if(marker.equals(backEnd.O_MARKER))
+        {
+            g.drawRect( xOffset+col*length, yOffset+row*length, length, length);
+            g.drawImage(backEnd.getoMarkerImage(),  xOffset + col * length, yOffset + row * length,null);
+        }
+    }
+
 
 
 

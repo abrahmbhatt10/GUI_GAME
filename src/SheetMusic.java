@@ -2,12 +2,15 @@ import java.util.ArrayList;
 
 public class SheetMusic {
     public ArrayList<Melody> melodyList = null;
-
-    public void SheetMusic()
+    private GUIGameViewer frontEnd;
+    public void SheetMusic(GUIGameViewer frontEnd)
     {
         melodyList = new ArrayList<Melody>();
+        this.frontEnd = frontEnd;
         for(int i = 0; i < 4; i++) {
             melodyList.add(new Melody());
+
+            melodyList.get(i).setFrontEnd(frontEnd);
         }
         melodyList.get(0).setPhrase(0, new boolean[]{false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false});
         melodyList.get(0).setPhrase(2, new boolean[]{true, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false});

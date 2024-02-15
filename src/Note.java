@@ -4,14 +4,22 @@ import java.util.Scanner;
 public class Note {
     private SheetMusic sheetMusic;
     private Melody newMelody;
+    private GUIGameViewer frontEnd;
 
     public Note() {
-        sheetMusic = new SheetMusic();
+        frontEnd = new GUIGameViewer(this);
+        sheetMusic = new SheetMusic(frontEnd);
         newMelody = new Melody();
+
     }
 
     public SheetMusic getSheetMusic() {
         return sheetMusic;
+    }
+
+    public GUIGameViewer getFrontEnd()
+    {
+        return frontEnd;
     }
 
     public void setSheetMusic(SheetMusic sheetMusic) {
@@ -33,14 +41,10 @@ public class Note {
     private void printSheetMusic() {
         System.out.println("  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15");
         int row = 0;
-        for(Melody array : this.sheetMusic.melodyList) {
-            System.out.print(row + " ");
-            for(Melody item : array) {
-                System.out.print(item + " ");
-
-            }
-            row++;
-            System.out.println();
+        for(int i = 0; i < this.sheetMusic.melodyList.size(); i++)
+        {
+            Melody currentMelody = this.sheetMusic.melodyList.get(i);
+            currentMelody.display();
         }
         TTTWindow.invalidate();
         TTTWindow.validate();
