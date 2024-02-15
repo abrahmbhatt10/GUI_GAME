@@ -6,9 +6,11 @@ import java.util.ArrayList;
 public class Melody {
     private boolean[][] currentMelody = new boolean[7][16];
     private GUIGameViewer frontEnd;
+    private int melodyPosition;
 
-    public Melody()
+    public Melody(int melodyPosition)
     {
+        this.melodyPosition = melodyPosition;
         for(int i = 0; i < 7; i++)
         {
             for(int j = 0; j < 16; j++)
@@ -19,6 +21,17 @@ public class Melody {
 
 
 
+    }
+
+    public void clearMelody()
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            for(int j = 0; j < 16; j++)
+            {
+                currentMelody[i][j] = false;
+            }
+        }
     }
 
     public boolean[][] getCurrentMelody() {
@@ -60,33 +73,42 @@ public class Melody {
 
     public void display(Graphics g)
     {
+
         //fills in the rectangle with 4 lines
-        int xOffset = backEnd.getxOffset();
-        int yOffset = backEnd.getyOffset();
-        int length = backEnd.getsLength();
-
-        g.drawRect(xOffset+col*length, yOffset+ row*length, length, length);
-
-        //fills rectangle in green if won
-        if(getIsWinningSquare())
-        {   g.setColor(Color.GREEN);
-            g.fillRect(xOffset+col*length, yOffset+row*length, length, length);
-        }
-
-        if(marker.equals(backEnd.X_MARKER))
+        int xOffset = frontEnd.getX_OFFSET();
+        int length = frontEnd.getSquareLength();
+        int yOffset = frontEnd.getY_OFFSET() + 9 * melodyPosition * length;
+        for(int i = 0; i < 7; i++)
         {
-            g.drawRect( xOffset+col*length,yOffset+row*length, length, length);
-            g.drawImage(backEnd.getxMarkerImage(), xOffset + col * length, yOffset + row * length,null);
-        }
-        if(marker.equals(backEnd.O_MARKER))
-        {
-            g.drawRect( xOffset+col*length, yOffset+row*length, length, length);
-            g.drawImage(backEnd.getoMarkerImage(),  xOffset + col * length, yOffset + row * length,null);
+            g.setColor(Color.WHITE);
+            g.drawRect((int)(xOffset * 0.5),yOffset + (i * length) + length, length, length);
+            g.setColor(Color.RED);
+            Font stringFont = new Font("Times New Roman", Font.PLAIN, 24);
+            g.setFont(stringFont);
+            g.drawString(Integer.toString(i), (int) (xOffset * 0.5), yOffset + (i * length) + length);
+            for(int j = 0; j < 16; j++)
+            {
+                g.setColor(Color.WHITE);
+                g.drawRect(xOffset,yOffset - (int)(1.5 * length),length * 16,length);
+                g.setColor(Color.RED);
+                stringFont = new Font("Times New Roman", Font.PLAIN, 24);
+                g.setFont(stringFont);
+                g.drawString(Integer.toString(j), xOffset + (length * j), yOffset - (int)(0.5 * length));
+                if(currentMelody[i][j])
+                {
+                    g.setColor(Color.GREEN);
+                    g.fillRect(xOffset+j*length, yOffset+i*length, length, length);
+                    g.setColor(Color.BLACK);
+                    g.drawRect(xOffset+j*length, yOffset+ i*length, length, length);
+                }
+                else
+                {
+                    g.setColor(Color.WHITE);
+                    g.fillRect(xOffset+j*length, yOffset+i*length, length, length);
+                    g.setColor(Color.BLACK);
+                    g.drawRect(xOffset+j*length, yOffset+ i*length, length, length);
+                }
+            }
         }
     }
-
-
-
-
-
 }

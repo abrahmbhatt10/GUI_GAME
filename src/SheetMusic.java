@@ -3,12 +3,13 @@ import java.util.ArrayList;
 public class SheetMusic {
     public ArrayList<Melody> melodyList = null;
     private GUIGameViewer frontEnd;
-    public void SheetMusic(GUIGameViewer frontEnd)
+    public SheetMusic(GUIGameViewer frontEnd)
     {
         melodyList = new ArrayList<Melody>();
         this.frontEnd = frontEnd;
-        for(int i = 0; i < 4; i++) {
-            melodyList.add(new Melody());
+        for(int i = 0; i < 4; i++)
+        {
+            melodyList.add(new Melody(i));
 
             melodyList.get(i).setFrontEnd(frontEnd);
         }
