@@ -34,4 +34,13 @@ public class Melody {
             currentMelody[chordTone][j] = phrase [j];
         }
     }
+
+    public void setNote(int chordTone, int notePosition, boolean noteValue)
+    {
+        currentMelody[chordTone][notePosition] = noteValue;
+    }
+
+
+
+
 }
