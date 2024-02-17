@@ -45,13 +45,18 @@ public class Note {
             //generates menu on for the user to select on the console
             System.out.println("Enter 1 to generate music");
             System.out.println("Enter 2 to change existing sheet music");
+            if(frontEnd.isVisible())
+            {
+                System.out.println("Enter 3 to close the game window");
+            }
+            else{
+                System.out.println("Enter 3 to open the game window ");
+            }
             System.out.println("Enter 0 to stop playing");
             int choice = input.nextInt();
-
             if(choice == 0)
             {
                 stopPlay = true;
-                continue;
             }
             else if(choice == 1)
             {
@@ -111,6 +116,16 @@ public class Note {
                 frontEnd.validate();
                 frontEnd.repaint();
             }
+            else if(choice == 3)
+            {
+                if(frontEnd.isVisible())
+                {
+                    frontEnd.setVisible(false);
+                }
+                else{
+                    frontEnd.setVisible(true);
+                }
+            }
             else
             {
                 System.out.println("Wrong choice. Please try again.");
@@ -124,6 +139,8 @@ public class Note {
     public static void main(String[] args) {
         Note game = new Note();
         game.run();
+        System.out.println("Exiting the game");
+        game.frontEnd.dispose();
     }
 
 }

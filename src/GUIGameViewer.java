@@ -8,7 +8,7 @@ public class GUIGameViewer extends JFrame {
     //declares class variables
     public final int BOX_SIZE = 25;
     public final int WINDOW_HEIGHT = 33 * BOX_SIZE;
-    public final int WINDOW_WIDTH = 50 * BOX_SIZE;
+    public final int WINDOW_WIDTH = 100 * BOX_SIZE;
 
     public final int Y_OFFSET = BOX_SIZE * 2;
     public final int X_OFFSET = BOX_SIZE * 2;
@@ -22,7 +22,7 @@ public class GUIGameViewer extends JFrame {
         this.gameNote = gameNote;
         this.setSize(WINDOW_HEIGHT, WINDOW_WIDTH);
         this.setTitle("Music Generator");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
         try {
             newMelodyImage = ImageIO.read(new File("Resources/PianoKeys.jpg"));
