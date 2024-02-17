@@ -3,39 +3,35 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.awt.image.BufferStrategy;
-import java.util.Scanner;
 
 public class GUIGameViewer extends JFrame {
-    private boolean isComplete = false;
+    //declares class variables
     public final int BOX_SIZE = 25;
     public final int WINDOW_HEIGHT = 33 * BOX_SIZE;
-    public final int WINDOW_WIDTH = 18 * BOX_SIZE;
-    public final int TITLE_BAR_HEIGHT = 50;
+    public final int WINDOW_WIDTH = 50 * BOX_SIZE;
+
     public final int Y_OFFSET = BOX_SIZE * 2;
     public final int X_OFFSET = BOX_SIZE * 2;
+    //points to back end
     private Note gameNote;
+    //Image variables for the Piano Keys jpg
+    private Image newMelodyImage, scaledNewMelodyImage;
 
+    //constructor
     public GUIGameViewer(Note gameNote) {
         this.gameNote = gameNote;
         this.setSize(WINDOW_HEIGHT, WINDOW_WIDTH);
         this.setTitle("Music Generator");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        try {
+            newMelodyImage = ImageIO.read(new File("Resources/PianoKeys.jpg"));
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+        scaledNewMelodyImage = newMelodyImage.getScaledInstance(4*BOX_SIZE, 4*BOX_SIZE, 0);
     }
-
-    public int getWINDOW_HEIGHT() {
-        return WINDOW_HEIGHT;
-    }
-
-    public int getWINDOW_WIDTH() {
-        return WINDOW_WIDTH;
-    }
-
-    public int getTITLE_BAR_HEIGHT() {
-        return TITLE_BAR_HEIGHT;
-    }
-
+    //getters and setters
     public int getSquareLength() {
         return BOX_SIZE;
     }
@@ -55,12 +51,34 @@ public class GUIGameViewer extends JFrame {
         g.setColor(Color.WHITE);
         g.drawRect(0,0,WINDOW_HEIGHT,WINDOW_WIDTH);
         g.fillRect(0,0,WINDOW_HEIGHT,WINDOW_WIDTH);
+        g.drawImage(scaledNewMelodyImage, getX_OFFSET() + 24 * BOX_SIZE, getY_OFFSET() + 4 * BOX_SIZE,null);
 
-        //Display the grid with each square
+        //Display the four melodies squares from the sheet music
         g.setColor(Color.BLACK);
-        for(int i = 0; i < 4; i++)
+        if(gameNote.getSheetMusic() != null)
         {
-            gameNote.getSheetMusic().melodyList.get(i).display(g);
+            for(int i = 0; i < 4; i++)
+            {
+                gameNote.getSheetMusic().melodyList.get(i).display(g);
+            }
         }
+        //check whether computer has generated a new melody
+        if(gameNote.isNewMelodyCreated())
+        {
+            g.setColor(Color.ORANGE);
+            Font stringFont = new Font("Times New Roman", Font.BOLD, 60);
+            g.setFont(stringFont);
+            g.drawString("* * * * *", (int) (getX_OFFSET() + 24 * BOX_SIZE), getY_OFFSET() + BOX_SIZE);
+            gameNote.getNewMelody().display(g);
+        }
+        //prints out game rules in window
+        g.setColor(Color.BLUE);
+        Font stringFont = new Font("Times New Roman", Font.PLAIN, 20);
+        g.setFont(stringFont);
+        g.drawString("GAME RULES: ", (int) (getX_OFFSET() + 18 * BOX_SIZE), getY_OFFSET() + 20 * BOX_SIZE);
+        g.drawString("Rule 1: The four melodies on the right are existing sheet music.", (int) (getX_OFFSET() + 18 * BOX_SIZE), getY_OFFSET() + 21 * BOX_SIZE);
+        g.drawString("Rule 2: You can revise or change any notes you like by giving its position.", (int) (getX_OFFSET() + 18 * BOX_SIZE), getY_OFFSET() + 22 * BOX_SIZE);
+        g.drawString("Rule 3: You can command the game to generate new music using existing sheet music.", (int) (getX_OFFSET() + 18 * BOX_SIZE), getY_OFFSET() + 23 * BOX_SIZE);
+
     }
 }

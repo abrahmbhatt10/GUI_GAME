@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 
 public class SheetMusic {
+    //declares class variables
     public ArrayList<Melody> melodyList = null;
     private GUIGameViewer frontEnd;
+
+    //constructor
     public SheetMusic(GUIGameViewer frontEnd)
     {
         melodyList = new ArrayList<Melody>();
@@ -13,6 +16,7 @@ public class SheetMusic {
 
             melodyList.get(i).setFrontEnd(frontEnd);
         }
+        //default values for sheet music
         melodyList.get(0).setPhrase(0, new boolean[]{false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false});
         melodyList.get(0).setPhrase(2, new boolean[]{true, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false});
         melodyList.get(0).setPhrase(4, new boolean[]{false, true, false, false, false, false, true, true, false, false, false, false, false, false, false, false});

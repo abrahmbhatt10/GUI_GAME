@@ -2,48 +2,47 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Note {
+    //declares class variables
     private SheetMusic sheetMusic;
     private Melody newMelody;
     private GUIGameViewer frontEnd;
+    private boolean newMelodyCreated;
 
+    //constructor
     public Note() {
         frontEnd = new GUIGameViewer(this);
         sheetMusic = new SheetMusic(frontEnd);
         newMelody = new Melody(-1);
-
+        newMelody.setFrontEnd(frontEnd);
+        this.newMelodyCreated = false;
+        frontEnd.invalidate();
+        frontEnd.validate();
+        frontEnd.repaint();
     }
 
+    //getters and setters
+    public boolean isNewMelodyCreated() {
+        return newMelodyCreated;
+    }
     public SheetMusic getSheetMusic() {
         return sheetMusic;
-    }
-
-    public GUIGameViewer getFrontEnd()
-    {
-        return frontEnd;
-    }
-
-    public void setSheetMusic(SheetMusic sheetMusic) {
-        this.sheetMusic = sheetMusic;
     }
 
     public Melody getNewMelody() {
         return newMelody;
     }
 
-    public void setNewMelody(Melody newMelody) {
-        this.newMelody = newMelody;
-    }
-
+    //runs program
     public void run()
     {
         Scanner input = new Scanner(System.in);
 
         System.out.println("Welcome to Music Generator!");
 
-        // Loop until there is a winner or no more turns
+        //loop until user wants to stop generating new music
         boolean stopPlay = false;
         while(!stopPlay) {
-            this.printSheetMusic();
+            //generates menu on for the user to select on the console
             System.out.println("Enter 1 to generate music");
             System.out.println("Enter 2 to change existing sheet music");
             System.out.println("Enter 0 to stop playing");
@@ -52,6 +51,19 @@ public class Note {
             {
                 stopPlay = true;
                 continue;
+            }
+            else if(choice == 1)
+            {
+                //Generating new music
+                for(int i = 0; i < 4; i++)
+                {
+                    newMelody.setPhrase(i*2, i*2,sheetMusic.melodyList.get(i));
+                }
+                newMelodyCreated = true;
+                newMelody.display(frontEnd.getGraphics());
+                frontEnd.invalidate();
+                frontEnd.validate();
+                frontEnd.repaint();
             }
             else if(choice == 2)
             {
@@ -62,20 +74,41 @@ public class Note {
                     System.out.println("Wrong choice. Please try again.");
                     continue;
                 }
+                System.out.println("Now changing melody " + melodyPosition);
                 Melody changeMelody = this.sheetMusic.melodyList.get(melodyPosition);
-                System.out.println("Enter row/col/string to change to true.");
-                String phrasing = input.nextLine();
-                changeMelody.clearMelody();
-                for(int i = 0; i + 1 < phrasing.length(); i++)
+                boolean melodyFlag = true;
+                while(melodyFlag)
                 {
-                    int chordTone = (int)(phrasing.charAt(i) - '0');
-                    int notePosition = (int)(phrasing.charAt(i + 1) - '0');
-                    changeMelody.setNote(chordTone, notePosition, true);
+                    System.out.println("Enter chord tone number 0 - 6");
+                    int chordTone = input.nextInt();
+                    System.out.println("Enter note position 0 - 15");
+                    int notePosition = input.nextInt();
+                    if(chordTone < 0 || chordTone > 6 || notePosition < 0 || notePosition > 15)
+                    {
+                        System.out.println("Wrong choice. Please input a number within the bounds necessary");
+                        continue;
+                    }
+                    boolean noteValue = sheetMusic.melodyList.get(melodyPosition).getNote(chordTone, notePosition);
+                    if(noteValue)
+                    {
+                        noteValue = false;
+                    }
+                    else
+                    {
+                        noteValue = true;
+                    }
+                    sheetMusic.melodyList.get(melodyPosition).setNote(chordTone, notePosition, noteValue);
+                    System.out.println("Do you want to change another note? Type y or n");
+                    input.nextLine();
+                    String response = input.nextLine();
+                    if(response.equals("n") || response.equals("N"))
+                    {
+                        melodyFlag = false;
+                    }
                 }
-            }
-            else if(choice == 1)
-            {
-
+                frontEnd.invalidate();
+                frontEnd.validate();
+                frontEnd.repaint();
             }
             else
             {
@@ -84,19 +117,6 @@ public class Note {
         }
 
 
-    }
-
-    private void printSheetMusic() {
-        System.out.println("  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15");
-        int row = 0;
-        for(int i = 0; i < this.sheetMusic.melodyList.size(); i++)
-        {
-            Melody currentMelody = this.sheetMusic.melodyList.get(i);
-            currentMelody.display(frontEnd.getGraphics());
-        }
-        frontEnd.invalidate();
-        frontEnd.validate();
-        frontEnd.repaint();
     }
 
     //main function
