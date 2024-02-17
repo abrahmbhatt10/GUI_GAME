@@ -1,13 +1,27 @@
 MUSIC GENERATOR GAME - GUI_GAME Agastya Brahmbhatt
 
+HOW TO RUN
+Note.java has the main function to run the program
+
+Program gives a console menu with the following options:
+Enter 1 to generate music
+Enter 2 to change existing sheet music
+Enter 3 to open/close the game window
+Enter 0 to stop playing
+
+When user selects Choice 1
+The Computer generates new music melody that is displayed on the right side
+
+When user selects Choice 2
+User can change different notes at different positions giving
+Melody position (0-3) and row (0-6)/col (0-15) positions in the melody
+
+When user selects Choice 3 - the game window can be opened or closed
+
 GAME RULES:
 Rule 1: The four melodies on the right are existing sheet music.
 Rule 2: You can revise or change any notes you like by giving its position.
 Rule 3: You can command the game to generate new music using existing sheet music.
-
-HOW TO RUN:
-
-
 
 This music generator generates different music melodies from existing sheet music. The user can edit and revise 4 different riffs they’ve liked and heard before on a rhythm board like splice beatmaker, except instead of the board having actual notes, the board’s y-axis is marked with number 1-7, to indicate the chord tone instead of the actual note, and the board’s x-axis is time, divided 16 times, to indicate the complexity of rhythm up to the 1/16th note.
 After the user inputs one riff, the computer will then take one rhythmic phrase of one particular note from each of the different riffs.
