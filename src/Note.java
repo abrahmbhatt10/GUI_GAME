@@ -47,6 +47,7 @@ public class Note {
             System.out.println("Enter 2 to change existing sheet music");
             System.out.println("Enter 0 to stop playing");
             int choice = input.nextInt();
+
             if(choice == 0)
             {
                 stopPlay = true;
