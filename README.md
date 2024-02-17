@@ -1,4 +1,14 @@
 MUSIC GENERATOR GAME - GUI_GAME Agastya Brahmbhatt
+
+GAME RULES:
+Rule 1: The four melodies on the right are existing sheet music.
+Rule 2: You can revise or change any notes you like by giving its position.
+Rule 3: You can command the game to generate new music using existing sheet music.
+
+HOW TO RUN:
+
+
+
 This music generator generates different music melodies from existing sheet music. The user can edit and revise 4 different riffs they’ve liked and heard before on a rhythm board like splice beatmaker, except instead of the board having actual notes, the board’s y-axis is marked with number 1-7, to indicate the chord tone instead of the actual note, and the board’s x-axis is time, divided 16 times, to indicate the complexity of rhythm up to the 1/16th note.
 After the user inputs one riff, the computer will then take one rhythmic phrase of one particular note from each of the different riffs.
 Then, the computer asks the user to input another riff. Here, the computer repeats step 2 except it takes the rhythmic phrase of one particular note which is a different chord tone than the first rhythmic phrase (if the first rhythmic phrase was of the 1rst note of the chord, then the next rhythmic phrase should be the 3 or the 5). Then, the computer overlaps it onto the rhythm from step 2, and attaches it to a different chord tone on the rhythm board. In this case, if there is any instance where two phrases overlap, the computer must shift the phrase from step 3 over by a quarter note until it doesn’t overlap with the other phrase(s). If for some reason it still overlaps, even if you’ve shifted it by 4 quarter notes, leading you to where you started, then you must find a way to delete 1 beat of either of the phrases at the most or simply find a different rhythmic pattern to play such a note on, and try to repeat what I said earlier for this step. If while shifting the phrase, a note goes off of the rhythm board, then move that note to the beginning of the rhythm board by as many beats as you are shifting.
